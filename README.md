@@ -18,7 +18,7 @@ sudo yum -y install terraform
 
 ```bash
 git clone https://github.com/Pondpdpr/cloud-midterm.git
-cd cloudcomp-2023-midterm
+cd cloud-midterm
 cd terraform
 terraform init
 terraform plan
