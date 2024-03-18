@@ -102,8 +102,8 @@ resource "aws_instance" "wp_server" {
                 mkdir /tmp/wordpress/wp-content/upgrade
                 sudo cp -a /tmp/wordpress/. /var/www/html
                 sudo chown -R www-data:www-data /var/www/html
-                sudo chmod 755 -R /var/www/html 
-                sudo chmod 644 -R /var/www/html 
+                sudo find /var/www/html/ -type d -exec chmod 750 {} \;
+                sudo find /var/www/html/ -type f -exec chmod 640 {} \;
                 sudo python3 wp_config_edit.py $DB_HOST $DB_NAME $DB_USER $DB_PASS
                 sudo python3 inject_wpo_const.py $IAM_S3_ACCESS_KEY $IAM_S3_SECRET_KEY $BUCKET_NAME $REGION
                 sudo systemctl restart apache2
