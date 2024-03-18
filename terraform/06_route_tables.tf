@@ -16,10 +16,10 @@ resource "aws_route_table_association" "public_wp" {
     route_table_id = aws_route_table.public.id
 }
 
-resource "aws_route_table_association" "public_nat" {
-    subnet_id = aws_subnet.public_nat.id
-    route_table_id = aws_route_table.public.id
-}
+# resource "aws_route_table_association" "public_nat" {
+#     subnet_id = aws_subnet.public_nat.id
+#     route_table_id = aws_route_table.public.id
+# }
 
 resource "aws_route_table" "private" {
     vpc_id = aws_vpc.main.id
