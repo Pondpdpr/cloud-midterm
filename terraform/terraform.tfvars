@@ -1,6 +1,6 @@
 region            = "ap-southeast-1"
 availability_zone = "ap-southeast-1a"
-ami               = "ami-ami-06c4be2792f419b7b"
+ami               = "ami-06c4be2792f419b7b"
 bucket_name       = "dev6332027821"
 database_name     = "wp-db"
 database_user     = "wp-user"
