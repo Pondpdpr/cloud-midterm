@@ -1,4 +1,4 @@
-# cloudcomp midterm 2023
+# cloud midterm 2023
 
 ## Set up terraform in AWS Linux 2
 
