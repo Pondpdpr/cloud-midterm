@@ -1,6 +1,6 @@
 #!/bin/bash
 git clone https://github.com/Pondpdpr/cloud-midterm.git
-cd cloudcomp-2023-midterm/scripts/mariadb
+cd cloudcomp-midterm/scripts/mariadb
 export DB_NAME=wordpress-db
 export DB_USER=wordpress-user
 export DB_PASS=admin

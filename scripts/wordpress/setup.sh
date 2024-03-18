@@ -1,6 +1,6 @@
 #!/bin/bash
 git clone https://github.com/Pondpdpr/cloud-midterm.git
-cd cloudcomp-2023-midterm/scripts/wordpress
+cd cloudcomp-midterm/scripts/wordpress
 export DB_HOST=
 export DB_NAME=wordpress-db
 export DB_USER=wordpress-user
