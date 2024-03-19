@@ -16,8 +16,8 @@ resource "aws_instance" "db" {
 
     user_data = <<-EOF
                 #!/bin/bash
-                git clone https://github.com/Pondpdpr/cloud-midterm.git
-                cd cloud-midterm/scripts/mariadb
+                # git clone https://github.com/Pondpdpr/cloud-midterm.git
+                # cd cloud-midterm/scripts/mariadb
                 export DB_NAME=${var.database_name}
                 export DB_USER=${var.database_user}
                 export DB_PASS=${var.database_pass}
@@ -26,9 +26,13 @@ resource "aws_instance" "db" {
                 sudo apt install -y mariadb-server
                 sudo systemctl start mariadb
                 sudo systemctl enable mariadb
-                python3 gen_setup_sql.py -n $DB_NAME -u $DB_USER -p $DB_PASS
-                sudo mysql -u root < mariadb_wp_setup.sql
-                sudo python3 mariadb_binding_addr.py
+                sudo mysql -e "CREATE DATABASE ${var.database_name};"
+                sudo mysql -e "CREATE USER '${var.database_user}'@'%' IDENTIFIED BY '${var.database_pass}';"
+                sudo mysql -e "GRANT ALL PRIVILEGES ON ${var.database_name}.* TO '${var.database_user}'@'%';"
+                sudo mysql -e "FLUSH PRIVILEGES;"
+                # python3 gen_setup_sql.py -n $DB_NAME -u $DB_USER -p $DB_PASS
+                # sudo mysql -u root < mariadb_wp_setup.sql
+                # sudo python3 mariadb_binding_addr.py
                 sudo systemctl restart mariadb
                 EOF
 
