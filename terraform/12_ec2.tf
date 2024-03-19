@@ -38,12 +38,6 @@ resource "aws_instance" "db" {
 
 }
 
-# resource "aws_network_interface_attachment" "db_from_wp" {
-#     device_index = 1
-#     instance_id = aws_instance.db.id
-#     network_interface_id = aws_network_interface.db_from_wp.id
-# }
-
 resource "aws_instance" "wp_server" {
     depends_on = [ aws_instance.db, aws_iam_access_key.s3_user ]
 
@@ -122,9 +116,3 @@ resource "aws_instance" "wp_server" {
         Name = "cc-midterm-wp"
     }
 }
-
-# resource "aws_network_interface_attachment" "wp_to_db" {
-#     device_index = 1
-#     instance_id = aws_instance.wp_server.id
-#     network_interface_id = aws_network_interface.wp_to_db.id
-# }
