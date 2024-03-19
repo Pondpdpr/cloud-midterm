@@ -33,7 +33,7 @@ resource "aws_instance" "db" {
                 EOF
 
     tags = {
-        Name = "cc-midterm-db"
+        Name = "cloud-midterm-db"
     }
 
 }
@@ -77,7 +77,6 @@ resource "aws_instance" "wp_server" {
                 export BUCKET_NAME=${var.bucket_name}
                 export REGION=${var.region}
 
-                # install php8.1 and apache2
                 sudo sed -i "/#\$nrconf{restart} = 'i';/s/.*/\$nrconf{restart} = 'a';/" /etc/needrestart/needrestart.conf
                 sudo apt update
                 sudo apt install -y apache2
@@ -89,7 +88,6 @@ resource "aws_instance" "wp_server" {
                 sudo python3 edit_apache2_dir.py
                 sudo systemctl restart apache2
 
-                # download wordpress
                 sudo python3 apache2_allow_override.py
                 sudo a2enmod rewrite
                 cp wp_config_edit.py /tmp/wp_config_edit.py
@@ -106,20 +104,16 @@ resource "aws_instance" "wp_server" {
                 sudo python3 wp_config_edit.py $DB_HOST $DB_NAME $DB_USER $DB_PASS $IAM_S3_ACCESS_KEY $IAM_S3_SECRET_KEY $BUCKET_NAME $REGION
                 sudo systemctl restart apache2
 
-                # install wordpress with wp-cli
                 curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
                 chmod +x wp-cli.phar
                 sudo mv wp-cli.phar /usr/local/bin/wp
-                # sudo wp core install --path=/var/www/html --allow-root --url=$WP_PUBLIC_IP --title="Cloud" --admin_user=$WP_ADMIN_USER --admin_password=$WP_ADMIN_PASS --admin_email="exmaple@example.com" --skip-email
                 sudo wp core install --path=/var/www/html --allow-root --url=$WP_PUBLIC_IP --title="Cloud" --admin_user=$WP_ADMIN_USER --admin_password=$WP_ADMIN_PASS --admin_email="exmaple@example.com" --skip-email
                 sleep 10
-                curl localhost > /dev/null
-                # sudo wp core install --path=/var/www/html --allow-root --url=$WP_PUBLIC_IP --title="Cloud" --admin_user=$WP_ADMIN_USER --admin_password=$WP_ADMIN_PASS --admin_email="exmaple@example.com" --skip-email
                 sudo wp plugin install amazon-s3-and-cloudfront --path=/var/www/html --allow-root --activate
                 sudo systemctl restart apache2
                 EOF
     tags = {
-        Name = "cc-midterm-wp"
+        Name = "cloud-midterm-wp"
     }
 }
 

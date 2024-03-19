@@ -4,7 +4,7 @@ resource "aws_subnet" "public_wp" {
     availability_zone = var.availability_zone
 
     tags = {
-        Name = "cc-midterm-public-wp"
+        Name = "cloud-midterm-public-wp"
     }
 }
 
@@ -14,7 +14,7 @@ resource "aws_subnet" "private_db_nat" {
     availability_zone = var.availability_zone
 
     tags = {
-        Name = "cc-midterm-private-db-nat"
+        Name = "cloud-midterm-private-db-nat"
     }
 }
 
@@ -24,7 +24,7 @@ resource "aws_subnet" "private_wp_db" {
     availability_zone = var.availability_zone
 
     tags = {
-        Name = "cc-midterm-private-wp-db"
+        Name = "cloud-midterm-private-wp-db"
     }
 }
 
@@ -34,6 +34,6 @@ resource "aws_subnet" "public_nat" {
     availability_zone = var.availability_zone
 
     tags = {
-        Name = "cc-midterm-public-nat"
+        Name = "cloud-midterm-public-nat"
     }
 }
