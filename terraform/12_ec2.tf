@@ -114,7 +114,7 @@ resource "aws_instance" "wp_server" {
                 sudo wp core install --path=/var/www/html --allow-root --url=$WP_PUBLIC_IP --title="Cloud" --admin_user=$WP_ADMIN_USER --admin_password=$WP_ADMIN_PASS --admin_email="exmaple@example.com" --skip-email
                 sleep 10
                 curl localhost > /dev/null
-                sudo wp core install --path=/var/www/html --allow-root --url=$WP_PUBLIC_IP --title="Cloud" --admin_user=$WP_ADMIN_USER --admin_password=$WP_ADMIN_PASS --admin_email="exmaple@example.com" --skip-email
+                # sudo wp core install --path=/var/www/html --allow-root --url=$WP_PUBLIC_IP --title="Cloud" --admin_user=$WP_ADMIN_USER --admin_password=$WP_ADMIN_PASS --admin_email="exmaple@example.com" --skip-email
                 sudo wp plugin install amazon-s3-and-cloudfront --path=/var/www/html --allow-root --activate
                 sudo systemctl restart apache2
                 EOF
