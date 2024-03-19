@@ -4,6 +4,11 @@ conf_file = "/var/www/html/wp-config.php"
 
 
 def main():
+    if len(sys.argv) < 5:
+        print(
+            "Usage: python3 gen_cred_file.py <access_key> <secret_key> <bucket_name> <region>"
+        )
+        sys.exit(1)
     db_host = sys.argv[1]
     db_name = sys.argv[2]
     db_user = sys.argv[3]
