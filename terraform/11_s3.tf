@@ -4,7 +4,7 @@ resource "aws_s3_bucket" "main" {
     force_destroy = true
 
     tags = {
-        Name = "cloud-midterm-s3"
+        Name = "cc-midterm-s3"
     }
 }
 

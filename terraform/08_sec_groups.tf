@@ -1,5 +1,5 @@
 resource "aws_security_group" "default" {
-    name        = "cloud-midterm-default-sg"
+    name        = "cc-midterm-default-sg"
     description = "Allow all traffic within the VPC"
     vpc_id      = aws_vpc.main.id
     
@@ -18,12 +18,12 @@ resource "aws_security_group" "default" {
     }
 
     tags = {
-        Name = "cloud-midterm-default-sg"
+        Name = "cc-midterm-default-sg"
     }
 }
 
 resource "aws_security_group" "wp_server" {
-    name        = "cloud-midterm-wordpress-sg"
+    name        = "cc-midterm-wordpress-sg"
     description = "Allow inbound traffic to WordPress server"
     vpc_id      = aws_vpc.main.id
     
@@ -63,12 +63,12 @@ resource "aws_security_group" "wp_server" {
     }
 
     tags = {
-        Name = "cloud-midterm-wp-server-sg"
+        Name = "cc-midterm-wp-server-sg"
     }
 }
 
 resource "aws_security_group" "db_server" {
-    name        = "cloud-midterm-db-sg"
+    name        = "cc-midterm-db-sg"
     description = "Allow inbound traffic to database server only from WordPress server"
     vpc_id      = aws_vpc.main.id
     
@@ -116,6 +116,6 @@ resource "aws_security_group" "db_server" {
     }
 
     tags = {
-        Name = "cloud-midterm-db-server-sg"
+        Name = "cc-midterm-db-server-sg"
     }
 }

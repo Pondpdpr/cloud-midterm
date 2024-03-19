@@ -3,6 +3,6 @@ resource "aws_nat_gateway" "main" {
     subnet_id     = aws_subnet.public_nat.id
 
     tags = {
-        Name = "cloud-midterm-nat"
+        Name = "cc-midterm-nat"
     }
 }
