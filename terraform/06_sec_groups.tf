@@ -1,6 +1,5 @@
 resource "aws_security_group" "default" {
     name        = "cloud-midterm-default-sg"
-    description = "Allow all traffic within the VPC"
     vpc_id      = aws_vpc.main.id
     
     ingress {
@@ -24,7 +23,6 @@ resource "aws_security_group" "default" {
 
 resource "aws_security_group" "wp_server" {
     name        = "cloud-midterm-wordpress-sg"
-    description = "Allow inbound traffic to WordPress server"
     vpc_id      = aws_vpc.main.id
     
     ingress {
@@ -69,7 +67,6 @@ resource "aws_security_group" "wp_server" {
 
 resource "aws_security_group" "db_server" {
     name        = "cloud-midterm-db-sg"
-    description = "Allow inbound traffic to database server only from WordPress server"
     vpc_id      = aws_vpc.main.id
     
     ingress {
