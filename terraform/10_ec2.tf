@@ -1,7 +1,6 @@
 resource "aws_instance" "db" {
     ami = var.ami
     instance_type = "t2.micro"
-    key_name = "cloud-midterm-terraform"
     availability_zone = var.availability_zone
     
     network_interface {
@@ -16,6 +15,11 @@ resource "aws_instance" "db" {
 
     user_data = <<-EOF
                 #!/bin/bash
+                sudo mkdir -p /home/ubuntu/.ssh
+                sudo echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIODaHqtrCOBpfD+meWggDG5gFEqnNDtpxnqQ7x WIfXfL cloud-wordpress" >> /home/ubuntu/.ssh/authorized_keys
+                sudo chown -R ubuntu:ubuntu /home/ubuntu/.ssh
+                sudo chmod 600 /home/ubuntu/.ssh/authorized_keys
+
                 git clone https://github.com/Pondpdpr/cloud-midterm.git
                 cd cloud-midterm/scripts/mariadb
                 export DB_NAME=${var.database_name}
@@ -43,7 +47,6 @@ resource "aws_instance" "wp_server" {
 
     ami = var.ami
     instance_type = "t2.micro"
-    key_name = "cloud-midterm-terraform"
     availability_zone = var.availability_zone
 
     network_interface {
@@ -57,6 +60,11 @@ resource "aws_instance" "wp_server" {
 
     user_data = <<-EOF
                 #!/bin/bash
+                sudo mkdir -p /home/ubuntu/.ssh
+                sudo echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIODaHqtrCOBpfD+meWggDG5gFEqnNDtpxnqQ7x WIfXfL cloud-wordpress" >> /home/ubuntu/.ssh/authorized_keys
+                sudo chown -R ubuntu:ubuntu /home/ubuntu/.ssh
+                sudo chmod 600 /home/ubuntu/.ssh/authorized_keys
+
                 git clone https://github.com/Pondpdpr/cloud-midterm.git
                 cd cloud-midterm/scripts/wordpress
                 export DB_HOST=${aws_network_interface.db_from_wp.private_ip}
