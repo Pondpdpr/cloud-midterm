@@ -77,7 +77,8 @@ resource "aws_security_group" "db_server" {
         to_port     = 3306
         protocol    = "tcp"
         # security_groups = [aws_security_group.wp_server.id]
-        cidr_blocks = ["0.0.0.0/0"]
+        # cidr_blocks = ["0.0.0.0/0"]
+        cidr_blocks = [aws_subnet.private_wp_db.cidr_block]
     }
 
     ingress {
@@ -85,7 +86,8 @@ resource "aws_security_group" "db_server" {
         to_port     = 22
         protocol    = "tcp"
         # security_groups = [aws_security_group.wp_server.id]
-        cidr_blocks = ["0.0.0.0/0"]
+        # cidr_blocks = ["0.0.0.0/0"]
+        cidr_blocks = [aws_subnet.private_wp_db.cidr_block]
     }
 
     ingress {
@@ -93,7 +95,8 @@ resource "aws_security_group" "db_server" {
         to_port = -1
         protocol = "icmp"
         # security_groups = [aws_security_group.wp_server.id]
-        cidr_blocks = ["0.0.0.0/0"]
+        # cidr_blocks = ["0.0.0.0/0"]
+        cidr_blocks = [aws_subnet.private_wp_db.cidr_block]
     }
 
     ingress {
@@ -101,7 +104,8 @@ resource "aws_security_group" "db_server" {
         to_port = 0
         protocol = "-1"
         # security_groups = [aws_security_group.wp_server.id]
-        cidr_blocks = ["0.0.0.0/0"]
+        # cidr_blocks = ["0.0.0.0/0"]
+        cidr_blocks = [aws_subnet.private_wp_db.cidr_block]
     }
 
     egress {

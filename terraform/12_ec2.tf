@@ -1,6 +1,7 @@
 resource "aws_instance" "db" {
     ami = var.ami
     instance_type = "t2.micro"
+    key_name = "cloud-midterm-terraform"
     availability_zone = var.availability_zone
     
     network_interface {
@@ -49,6 +50,7 @@ resource "aws_instance" "wp_server" {
 
     ami = var.ami
     instance_type = "t2.micro"
+    key_name = "cloud-midterm-terraform"
     availability_zone = var.availability_zone
 
     network_interface {
