@@ -30,6 +30,7 @@ resource "aws_instance" "db" {
                 sudo mysql -e "CREATE USER '${var.database_user}'@'%' IDENTIFIED BY '${var.database_pass}';"
                 sudo mysql -e "GRANT ALL PRIVILEGES ON ${var.database_name}.* TO '${var.database_user}'@'%';"
                 sudo mysql -e "FLUSH PRIVILEGES;"
+                sudo sed -i 's/bind-address.*/bind-address = 0.0.0.0/' /etc/mysql/mariadb.conf.d/50-server.cnf
                 # python3 gen_setup_sql.py -n $DB_NAME -u $DB_USER -p $DB_PASS
                 # sudo mysql -u root < mariadb_wp_setup.sql
                 # sudo python3 mariadb_binding_addr.py
