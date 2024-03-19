@@ -16,8 +16,8 @@ resource "aws_instance" "db" {
 
     user_data = <<-EOF
                 #!/bin/bash
-                git clone https://github.com/Pondpdpr/cloud-midterm.git
-                cd cloud-midterm/scripts/mariadb
+                # git clone https://github.com/Pondpdpr/cloud-midterm.git
+                # cd cloud-midterm/scripts/mariadb
                 export DB_NAME=${var.database_name}
                 export DB_USER=${var.database_user}
                 export DB_PASS=${var.database_pass}
@@ -26,9 +26,17 @@ resource "aws_instance" "db" {
                 sudo apt install -y mariadb-server
                 sudo systemctl start mariadb
                 sudo systemctl enable mariadb
-                python3 gen_setup_sql.py -n $DB_NAME -u $DB_USER -p $DB_PASS
-                sudo mysql -u root < mariadb_wp_setup.sql
-                sudo python3 mariadb_binding_addr.py
+                sudo mysql -e "CREATE USER '${var.database_user}'@'localhost' IDENTIFIED BY '${var.database_pass}';"
+                sudo mysql -e "CREATE DATABASE ${var.database_name};"
+                sudo mysql -e "GRANT ALL PRIVILEGES ON ${var.database_name}.* TO '${var.database_user}'@'localhost';"
+                sudo mysql -e "CREATE USER '${var.database_user}'@'%' IDENTIFIED BY '${var.database_pass}';"
+                sudo mysql -e "GRANT ALL PRIVILEGES ON ${var.database_name}.* TO '${var.database_user}'@'%';"
+                sudo mysql -e "FLUSH PRIVILEGES;"
+                sudo sed -i 's/bind-address.*/bind-address = 0.0.0.0/' /etc/mysql/mariadb.conf.d/50-server.cnf
+                sudo systemctl restart mariadb
+                # python3 gen_setup_sql.py -n $DB_NAME -u $DB_USER -p $DB_PASS
+                # sudo mysql -u root < mariadb_wp_setup.sql
+                # sudo python3 mariadb_binding_addr.py
                 sudo systemctl restart mariadb
                 EOF
 
@@ -71,7 +79,6 @@ resource "aws_instance" "wp_server" {
                 export BUCKET_NAME=${var.bucket_name}
                 export REGION=${var.region}
 
-                # install php8.1 and apache2
                 sudo sed -i "/#\$nrconf{restart} = 'i';/s/.*/\$nrconf{restart} = 'a';/" /etc/needrestart/needrestart.conf
                 sudo apt update
                 sudo apt install -y apache2
@@ -83,7 +90,6 @@ resource "aws_instance" "wp_server" {
                 sudo python3 edit_apache2_dir.py
                 sudo systemctl restart apache2
 
-                # download wordpress
                 sudo python3 apache2_allow_override.py
                 sudo a2enmod rewrite
                 cp wp_config_edit.py /tmp/wp_config_edit.py
@@ -100,14 +106,13 @@ resource "aws_instance" "wp_server" {
                 sudo python3 wp_config_edit.py $DB_HOST $DB_NAME $DB_USER $DB_PASS $IAM_S3_ACCESS_KEY $IAM_S3_SECRET_KEY $BUCKET_NAME $REGION
                 sudo systemctl restart apache2
 
-                # install wordpress with wp-cli
                 curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
                 chmod +x wp-cli.phar
                 sudo mv wp-cli.phar /usr/local/bin/wp
-                sudo wp core install --path=/var/www/html --allow-root --url=$WP_PUBLIC_IP --title="Cloud" --admin_user=$WP_ADMIN_USER --admin_password=$WP_ADMIN_PASS --admin_email="exmaple@example.com" --skip-email
+                sudo wp core install --path=/var/www/html --allow-root --url=$WP_PUBLIC_IP --admin_user=$WP_ADMIN_USER --admin_password=$WP_ADMIN_PASS --admin_email="exmaple@example.com" --title="Cloud" --skip-email
                 sleep 10
                 curl localhost > /dev/null
-                sudo wp core install --path=/var/www/html --allow-root --url=$WP_PUBLIC_IP --title="Cloud" --admin_user=$WP_ADMIN_USER --admin_password=$WP_ADMIN_PASS --admin_email="exmaple@example.com" --skip-email
+                sudo wp core install --path=/var/www/html --allow-root --url=$WP_PUBLIC_IP --admin_user=$WP_ADMIN_USER --admin_password=$WP_ADMIN_PASS --admin_email="exmaple@example.com" --title="Cloud" --skip-email
                 sudo wp plugin install amazon-s3-and-cloudfront --path=/var/www/html --allow-root --activate
                 sudo systemctl restart apache2
                 EOF
