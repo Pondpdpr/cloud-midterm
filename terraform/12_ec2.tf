@@ -26,8 +26,8 @@ resource "aws_instance" "db" {
                 sudo apt install -y mariadb-server
                 sudo systemctl start mariadb
                 sudo systemctl enable mariadb
-                sudo mysql -e "CREATE USER '${var.database_user}'@'localhost' IDENTIFIED BY '${var.database_pass}';"
                 sudo mysql -e "CREATE DATABASE ${var.database_name};"
+                sudo mysql -e "CREATE USER '${var.database_user}'@'localhost' IDENTIFIED BY '${var.database_pass}';"
                 sudo mysql -e "GRANT ALL PRIVILEGES ON ${var.database_name}.* TO '${var.database_user}'@'localhost';"
                 sudo mysql -e "CREATE USER '${var.database_user}'@'%' IDENTIFIED BY '${var.database_pass}';"
                 sudo mysql -e "GRANT ALL PRIVILEGES ON ${var.database_name}.* TO '${var.database_user}'@'%';"
@@ -37,7 +37,7 @@ resource "aws_instance" "db" {
                 # python3 gen_setup_sql.py -n $DB_NAME -u $DB_USER -p $DB_PASS
                 # sudo mysql -u root < mariadb_wp_setup.sql
                 # sudo python3 mariadb_binding_addr.py
-                sudo systemctl restart mariadb
+                # sudo systemctl restart mariadb
                 EOF
 
     tags = {
