@@ -7,7 +7,7 @@ resource "aws_route_table" "public" {
     }
 
     tags = {
-        Name = "cc-midterm-rt-public"
+        Name = "cloud-midterm-rt-public"
     }
 }
 
@@ -25,7 +25,7 @@ resource "aws_route_table" "private" {
     vpc_id = aws_vpc.main.id
 
     tags = {
-        Name = "cc-midterm-rt-private"
+        Name = "cloud-midterm-rt-private"
     }
 }
 
@@ -43,7 +43,7 @@ resource "aws_route_table" "private_with_nat" {
     }
 
     tags = {
-        Name = "cc-midterm-rt-private-with-nat"
+        Name = "cloud-midterm-rt-private-with-nat"
     }
 }
 

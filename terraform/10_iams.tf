@@ -1,7 +1,7 @@
 resource "aws_iam_user" "s3_user" {
-    name = "cc-midterm-s3-user"
+    name = "cloud-midterm-s3-user"
     tags = {
-        Name = "cc-midterm-s3-full-access-user"
+        Name = "cloud-midterm-s3-full-access-user"
     }
 }
 

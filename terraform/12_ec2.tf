@@ -112,6 +112,6 @@ resource "aws_instance" "wp_server" {
                 sudo systemctl restart apache2
                 EOF
     tags = {
-        Name = "cc-midterm-wp"
+        Name = "cloud-midterm-wp"
     }
 }

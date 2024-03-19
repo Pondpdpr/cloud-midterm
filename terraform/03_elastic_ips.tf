@@ -1,11 +1,11 @@
 resource "aws_eip" "nat" {
   tags = {
-    Name = "cc-midterm-nat-eip"
+    Name = "cloud-midterm-nat-eip"
   }
 }
 
 resource "aws_eip" "wp_server" {
   tags = {
-    Name = "cc-midterm-wordpress-eip"
+    Name = "cloud-midterm-wordpress-eip"
   }
 }
