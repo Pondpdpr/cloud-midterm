@@ -87,16 +87,16 @@ resource "aws_instance" "wp_server" {
                 sudo systemctl start php8.1-fpm
                 sudo systemctl restart apache2
                 sudo python3 edit_apache2_dir.py
-                sudo python3 apache2_allow_override.py
-                sudo a2enmod rewrite
                 sudo systemctl restart apache2
 
                 # download wordpress
+                sudo python3 apache2_allow_override.py
+                sudo a2enmod rewrite
                 cp wp_config_edit.py /tmp/wp_config_edit.py
                 cd /tmp
                 curl -O https://wordpress.org/latest.tar.gz
                 tar xzf latest.tar.gz
-                # touch /tmp/wordpress/.htaccess
+                touch /tmp/wordpress/.htaccess
                 cp /tmp/wordpress/wp-config-sample.php /tmp/wordpress/wp-config.php
                 # mkdir /tmp/wordpress/wp-content/upgrade
                 sudo cp -a /tmp/wordpress/. /var/www/html
