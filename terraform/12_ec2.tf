@@ -45,7 +45,7 @@ resource "aws_instance" "db" {
 # }
 
 resource "aws_instance" "wp_server" {
-    depends_on = [ aws_instance.db aws_iam_access_key.s3_user ]
+    depends_on = [ aws_instance.db, aws_iam_access_key.s3_user ]
 
     ami = var.ami
     instance_type = "t2.micro"
