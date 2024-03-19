@@ -33,10 +33,14 @@ def main():
                 contents += f"  'serve-from-s3' => true,\n"
                 contents += f") ) );\n"
 
-    contents.replace("'DB_HOST', 'localhost'", f"'DB_HOST', '{db_host}'")
-    contents.replace("'DB_NAME', 'database_name_here'", f"'DB_NAME', '{db_name}'")
-    contents.replace("'DB_USER', 'username_here'", f"'DB_USER', '{db_user}'")
-    contents.replace("'DB_PASSWORD', 'password_here'", f"'DB_PASSWORD', '{db_pass}'")
+    contents = contents.replace("'DB_HOST', 'localhost'", f"'DB_HOST', '{db_host}'")
+    contents = contents.replace(
+        "'DB_NAME', 'database_name_here'", f"'DB_NAME', '{db_name}'"
+    )
+    contents = contents.replace("'DB_USER', 'username_here'", f"'DB_USER', '{db_user}'")
+    contents = contents.replace(
+        "'DB_PASSWORD', 'password_here'", f"'DB_PASSWORD', '{db_pass}'"
+    )
 
     with open(conf_file, "w") as f:
         f.write(contents)
